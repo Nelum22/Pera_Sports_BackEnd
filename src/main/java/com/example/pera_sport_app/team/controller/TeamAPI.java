@@ -24,9 +24,9 @@ public class TeamAPI {
         return teamService.addTeam(teamAddRequestDto);
     }
 
-//    @PostMapping(value = "/get-teams")
-//    public List<Team> getTeam(@RequestParam ("teamName") String teamName) {
-//        log.info("Request to get team {}", teamName);
-//        return teamService.getTeam(teamName);
-//    }
+    @PostMapping(value = "/get-teams")
+    public List<Team> getTeam(@RequestParam ("teamName") String teamName) {
+        log.info("Request to get team {}", teamName);
+        return teamService.getTeam(teamName);
+    }
 }

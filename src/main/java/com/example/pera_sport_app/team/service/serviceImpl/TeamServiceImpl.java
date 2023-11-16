@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -26,8 +28,8 @@ public class TeamServiceImpl implements TeamService {
     private final TeamRepository teamRepository;
 
 
-    private ModelMapper mapper;
 
+    private final ModelMapper mapper;
 
     @Override
     public ResponseDto addTeam(TeamAddRequestDto teamAddRequestDto){
@@ -43,15 +45,15 @@ public class TeamServiceImpl implements TeamService {
         }
     }
 
-//    @Override
+    @Override
     public List<Team> getTeam(String teamName){
         try{
             List<Team> teams = new ArrayList<>();
-//            if(teamName.isEmpty()){
-//                teams = teamRepository.findTeamsByName(teamName);
-//            }else {
-//                teams = teamRepository.findTeams();
-//            }
+            if(!(teamName.isEmpty())){
+                teams = teamRepository.findTeamsByName(teamName);
+            }else {
+                teams = teamRepository.findTeams();
+            }
             return teams;
         }catch (Exception e){
             e.printStackTrace();

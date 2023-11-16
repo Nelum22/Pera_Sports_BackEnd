@@ -12,5 +12,5 @@ public interface TeamService {
 
     ResponseDto addTeam(TeamAddRequestDto teamAddRequestDto);
 
-//    List<Team> getTeam(String teamName);
+    List<Team> getTeam(String teamName);
 }

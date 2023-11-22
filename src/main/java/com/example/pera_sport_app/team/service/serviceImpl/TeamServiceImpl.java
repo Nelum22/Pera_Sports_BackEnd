@@ -5,6 +5,7 @@ import com.example.pera_sport_app.Enum.Status;
 import com.example.pera_sport_app.player.dto.ResponseDto;
 import com.example.pera_sport_app.repository.TeamRepository;
 import com.example.pera_sport_app.team.dto.TeamAddRequestDto;
+import com.example.pera_sport_app.team.dto.TeamUpdateRequestDto;
 import com.example.pera_sport_app.team.service.TeamService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -59,13 +60,29 @@ public class TeamServiceImpl implements TeamService {
         }
     }
 
-//    @Override
-    public ResponseDto editTeam(TeamAddRequestDto teamAddRequestDto){
+    @Override
+    public ResponseDto updateTeam(TeamUpdateRequestDto teamUpdateRequestDto){
         try{
-            Team team = mapper.map(teamAddRequestDto,Team.class);
-            team.setCreatedDate(LocalDateTime.now());
+            Team team = teamRepository.findByTeamId(teamUpdateRequestDto.getTeamId());
+            team.setUpdatedDate(LocalDateTime.now());
+            team.setTeamName(teamUpdateRequestDto.getTeamName());
+            team.setTeamCount(teamUpdateRequestDto.getTeamCount());
+            team.setTeamYear(teamUpdateRequestDto.getTeamYear());
+            team.setTeamStatus(teamUpdateRequestDto.getTeamStatus());
             teamRepository.save(team);
             return new ResponseDto("01","Data updated");
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseDto("00","System Error");
+        }
+    }
+
+    @Override
+    public ResponseDto deleteTeam(Long teamId){
+        try{
+            Team team = teamRepository.findByTeamId(teamId);
+            teamRepository.deleteById(teamId);
+            return new ResponseDto("01","Team Deleted");
         }catch (Exception e){
             e.printStackTrace();
             return new ResponseDto("00","System Error");

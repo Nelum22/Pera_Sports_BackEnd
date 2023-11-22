@@ -9,9 +9,13 @@ import java.util.List;
 
 public interface TeamRepository extends JpaRepository<Team, Long> {
 
-//    @Query("SELECT s FROM Team s WHERE s.teamName LIKE :name% ")
-//    List<Team> findTeamsByName(String name);
-//
-//    @Query("SELECT s FROM Team s  ")
-//    List<Team> findTeams();
+
+    @Query("SELECT s FROM Team s WHERE s.teamName LIKE %:name% ")
+    List<Team> findTeamsByName(String name);
+
+    @Query("SELECT s FROM Team s  ")
+    List<Team> findTeams();
+
+    Team findByTeamId(Long teamId);
+
 }

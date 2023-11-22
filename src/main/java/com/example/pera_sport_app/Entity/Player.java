@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Collection;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -23,6 +24,15 @@ public class Player {
 
     @Column(name = "last_name")
     private String lastName;
+
+    @Column(name = "faculty")
+    private String faculty;
+
+    @Column(name = "reg_no")
+    private String regNo;
+
+    @Column(name = "birth_date")
+    private Date birthDay;
 
     @OneToMany(mappedBy = "playerId",cascade = CascadeType.ALL)
     private Collection<PlayerRoleMappedEntity> playerRoleMappedCollection;

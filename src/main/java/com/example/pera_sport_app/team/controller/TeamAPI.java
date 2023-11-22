@@ -3,6 +3,7 @@ package com.example.pera_sport_app.team.controller;
 import com.example.pera_sport_app.Entity.Team;
 import com.example.pera_sport_app.player.dto.ResponseDto;
 import com.example.pera_sport_app.team.dto.TeamAddRequestDto;
+import com.example.pera_sport_app.team.dto.TeamUpdateRequestDto;
 import com.example.pera_sport_app.team.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,4 +30,18 @@ public class TeamAPI {
         log.info("Request to get team {}", teamName);
         return teamService.getTeam(teamName);
     }
+
+    @PostMapping(value = "/update")
+    public ResponseDto updateTeam(@RequestBody TeamUpdateRequestDto teamUpdateRequestDto) {
+        log.info("Request to update team {}", teamUpdateRequestDto);
+        return teamService.updateTeam(teamUpdateRequestDto);
+    }
+
+
+    @DeleteMapping(value = "/delete")
+    public ResponseDto deleteTeam(@RequestParam ("teamId") Long teamId) {
+        log.info("Request to delete team {}", teamId);
+        return teamService.deleteTeam(teamId);
+    }
+
 }

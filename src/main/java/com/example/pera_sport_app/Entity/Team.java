@@ -40,9 +40,9 @@ public class Team {
     @Column(name = "updated_date")
     private LocalDateTime updatedDate;
 
-    @OneToMany(mappedBy = "teamId",cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Collection<PlayerRole> playerRoleCollection;
+//    @OneToMany(mappedBy = "teamId",cascade = CascadeType.ALL)
+//    @JsonIgnore
+//    private Collection<PlayerRole> playerRoleCollection;
 
     @OneToMany(mappedBy = "tId",cascade = CascadeType.ALL)
     @JsonIgnore

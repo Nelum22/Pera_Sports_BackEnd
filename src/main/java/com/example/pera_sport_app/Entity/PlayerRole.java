@@ -23,15 +23,12 @@ public class PlayerRole {
     @Column(name = "role_name", nullable = false, length = 20)
     private String roleName;
 
-    @Column(name = "last_name")
-    private String lastName;
-
     @OneToMany(mappedBy = "playerRoleId",cascade = CascadeType.ALL)
     @JsonIgnore
     private Collection<PlayerRoleMappedEntity> playerRoleMappedCollection;
 
-    @JoinColumn(name = "team_id", referencedColumnName = "team_id", nullable = false)
-    @ManyToOne
-    @JsonIgnore
-    private Team teamId;
+//    @JoinColumn(name = "team_id", referencedColumnName = "team_id", nullable = false)
+//    @ManyToOne
+//    @JsonIgnore
+//    private Team teamId;
 }

@@ -1,10 +1,12 @@
 package com.example.pera_sport_app.Entity;
 
+import com.example.pera_sport_app.Enum.Status;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Date;
 
@@ -32,7 +34,11 @@ public class Player {
     private String regNo;
 
     @Column(name = "birth_date")
-    private Date birthDay;
+    private LocalDate birthDay;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @OneToMany(mappedBy = "playerId",cascade = CascadeType.ALL)
     private Collection<PlayerRoleMappedEntity> playerRoleMappedCollection;

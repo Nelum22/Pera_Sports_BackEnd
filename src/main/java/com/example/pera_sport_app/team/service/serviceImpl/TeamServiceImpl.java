@@ -1,10 +1,13 @@
 package com.example.pera_sport_app.team.service.serviceImpl;
 
+import com.example.pera_sport_app.Entity.Player;
 import com.example.pera_sport_app.Entity.Team;
 import com.example.pera_sport_app.Enum.Status;
 import com.example.pera_sport_app.player.dto.ResponseDto;
+import com.example.pera_sport_app.repository.PlayerRepository;
 import com.example.pera_sport_app.repository.TeamRepository;
 import com.example.pera_sport_app.team.dto.TeamAddRequestDto;
+import com.example.pera_sport_app.team.dto.TeamGetDto;
 import com.example.pera_sport_app.team.dto.TeamUpdateRequestDto;
 import com.example.pera_sport_app.team.service.TeamService;
 import jakarta.transaction.Transactional;
@@ -27,10 +30,9 @@ import java.util.List;
 public class TeamServiceImpl implements TeamService {
 
     private final TeamRepository teamRepository;
-
-
-
     private final ModelMapper mapper;
+
+    private final PlayerRepository playerRepository;
 
     @Override
     public ResponseDto addTeam(TeamAddRequestDto teamAddRequestDto){
@@ -47,7 +49,7 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public List<Team> getTeam(String teamName){
+    public List<TeamGetDto> getTeam(String teamName){
         try{
             List<Team> teams = new ArrayList<>();
             if(!(teamName.isEmpty())){
@@ -55,7 +57,17 @@ public class TeamServiceImpl implements TeamService {
             }else {
                 teams = teamRepository.findTeams();
             }
-            return teams;
+            List<TeamGetDto> teamGetDtos = new ArrayList<>();
+            for(Team team : teams){
+                TeamGetDto teamGetDto = mapper.map(team,TeamGetDto.class);
+                Player captain = playerRepository.findCaptainAndVCaptainByRoleAndName(team.getTeamName(),1L);
+                Player vCaptain = playerRepository.findCaptainAndVCaptainByRoleAndName(team.getTeamName(),2L);
+                teamGetDto.setCaptain(captain.getFirstName()+" "+captain.getLastName());
+                teamGetDto.setVCaptain(vCaptain.getFirstName()+" "+vCaptain.getLastName());
+                teamGetDtos.add(teamGetDto);
+            }
+
+            return teamGetDtos;
         }catch (Exception e){
             e.printStackTrace();
             return null;

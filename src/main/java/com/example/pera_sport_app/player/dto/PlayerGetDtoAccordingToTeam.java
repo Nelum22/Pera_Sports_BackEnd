@@ -1,5 +1,6 @@
 package com.example.pera_sport_app.player.dto;
 
+import com.example.pera_sport_app.Enum.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -15,4 +16,5 @@ public class PlayerGetDtoAccordingToTeam{
     private String regNo;
     private LocalDate birthDay;
     private String roleName;
+    private Status status;
 }

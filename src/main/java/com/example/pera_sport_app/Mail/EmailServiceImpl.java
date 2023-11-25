@@ -47,7 +47,7 @@ public class EmailServiceImpl implements  EmailService{
             helper.setTo(request.getTo());
             helper.setText(html, true);
             helper.setSubject(request.getSubject());
-            helper.setFrom("samudithawijesundara@gmail.com");
+            helper.setFrom("sportspera684@gmail.com");
             sender.send(message);
 
             response.setMessage("mail send to : " + request.getTo());

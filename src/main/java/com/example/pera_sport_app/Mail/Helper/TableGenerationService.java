@@ -206,7 +206,7 @@ public class TableGenerationService {
                         "                    <tr>\n" +
                         "                      <td style=\"width:100%;padding-right:0px;padding-left:0px;\">\n" +
                         "                        <div align=\"center\" style=\"line-height:10px\"><img\n" +
-                        "                                src=\"https://media.licdn.com/dms/image/C510BAQF5vnmMNlE1HA/company-logo_200_200/0/1567406906095?e=2147483647&v=beta&t=8RNfAlz2JWBbxldXFzAKEFatS9xmyfOcRBCQabgMy9U\"\n" +
+                        "                                src=\"https://upload.wikimedia.org/wikipedia/en/c/cc/University_of_Peradeniya_crest.png\"\n" +
                         "                                style=\"display: block; height: auto; border: 0; width: 100px; max-width: 100%;\"\n" +
                         "                                width=\"100\" /></div>\n" +
                         "                      </td>\n" +
@@ -350,7 +350,7 @@ public class TableGenerationService {
                 stringBuilder.append("style=\"text-decoration:none;display:inline-block;color:#ffffff;background-color:#4c9345;border-radius:4px;width:auto;border-top:1px solid #8a3b8f;font-weight:400;border-right:1px solid #8a3b8f;border-bottom:1px solid #8a3b8f;border-left:1px solid #8a3b8f;padding-top:5px;padding-bottom:5px;font-family:Arial, Helvetica Neue, Helvetica, sans-serif;text-align:center;mso-border-alt:none;word-break:keep-all;\"\n" +
                 "                                            target=\"_blank\"><span\n" +
                 "                                            style=\"padding-left:20px;padding-right:20px;font-size:12px;display:inline-block;letter-spacing:normal;\"><span\n");
-                    stringBuilder.append("style=\\\"font-size: 12px; line-height: 2; word-break: break-word; mso-line-height-alt: 24px;\\\">Login</span></span></a>");
+//                    stringBuilder.append("style=\\\"font-size: 12px; line-height: 2; word-break: break-word; mso-line-height-alt: 24px;\\\">Login</span></span></a>");
 
                 stringBuilder.append(
                 "                                    </div>\n" +

@@ -1,9 +1,14 @@
 package com.example.pera_sport_app.team.service.serviceImpl;
 
+import com.example.pera_sport_app.Entity.MasterData;
 import com.example.pera_sport_app.Entity.Player;
 import com.example.pera_sport_app.Entity.Team;
 import com.example.pera_sport_app.Enum.Status;
+import com.example.pera_sport_app.Mail.EmailService;
+import com.example.pera_sport_app.Mail.dto.MailData;
+import com.example.pera_sport_app.Mail.dto.MailRequest;
 import com.example.pera_sport_app.player.dto.ResponseDto;
+import com.example.pera_sport_app.repository.MasterDateRepository;
 import com.example.pera_sport_app.repository.PlayerRepository;
 import com.example.pera_sport_app.repository.TeamRepository;
 import com.example.pera_sport_app.team.dto.TeamAddRequestDto;
@@ -20,8 +25,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.pera_sport_app.Constants.ADMIN_EMAIL_ADDRESS;
 
 @Service
 @Transactional
@@ -32,16 +40,52 @@ public class TeamServiceImpl implements TeamService {
     private final TeamRepository teamRepository;
     private final ModelMapper mapper;
 
+    private final EmailService emailService;
+
+    private final MasterDateRepository masterDateRepository;
+
     private final PlayerRepository playerRepository;
 
     @Override
     public ResponseDto addTeam(TeamAddRequestDto teamAddRequestDto){
         try{
-            Team team = mapper.map(teamAddRequestDto,Team.class);
-            team.setCreatedDate(LocalDateTime.now());
-            team.setTeamStatus(Status.ACTIVE);
-            teamRepository.save(team);
-            return new ResponseDto("01","Added successfully");
+            if(!(teamRepository.existsByTeamName(teamAddRequestDto.getTeamName()))) {
+                Team team = mapper.map(teamAddRequestDto, Team.class);
+                team.setCreatedDate(LocalDateTime.now());
+                team.setTeamStatus(Status.ACTIVE);
+                Team savedTeam = teamRepository.save(team);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+                List<MasterData> masterData = masterDateRepository.findAllDataByType("ADMIN");
+
+                for(MasterData masterData1 : masterData) {
+
+                    // Send Email
+                    MailRequest mailRequest = new MailRequest();
+                    mailRequest.setTo(masterData1.getEmail());
+                    mailRequest.setSubject("New Team Added Successfully To Pera Sport Information Website");
+                    MailData mailData = new MailData();
+                    String[] details = {"Team Details :"};
+                    String[] detailsDescription1 = {"Team Name - " + savedTeam.getTeamName(), "Team Count - " + savedTeam.getTeamCount(), "Year - " + savedTeam.getTeamYear(),
+                            "Status - " + savedTeam.getTeamStatus(), "Created Date - " + formatter.format(savedTeam.getCreatedDate())};
+                    String[] detailsDescription2 = {};
+                    String[] detailsDescription3 = {};
+                    String[] detailsDescription4 = {};
+                    mailData.setHeader("New Team Added To The System");
+                    mailData.setHeaderDescription("");
+                    mailData.setDescription("");
+                    mailData.setDetails(details);
+                    mailData.setDetailsDescription1(detailsDescription1);
+                    mailData.setDetailsDescription2(detailsDescription2);
+                    mailData.setDetailsDescription3(detailsDescription3);
+                    mailData.setDetailsDescription4(detailsDescription4);
+
+                    emailService.sendEmailWithHtmlContent(mailRequest, mailData);
+                }
+                return new ResponseDto("01", "Added successfully");
+            }else{
+                return new ResponseDto("02", "Team Already Exists");
+            }
         }catch (Exception e){
             e.printStackTrace();
             return new ResponseDto("00","System Error");

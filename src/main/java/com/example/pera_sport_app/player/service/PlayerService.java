@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface PlayerService {
 
-    ResponseDto addTransaction(PlayerAddDto playerAddDto);
+    ResponseDto add(PlayerAddDto playerAddDto);
 
     ResponseDto editPlayer(PlayerEditDto playerEditDto);
 

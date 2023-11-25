@@ -23,9 +23,9 @@ public class PlayerAPI {
     private final PlayerService playerService;
 
     @PostMapping(value = "/add")
-    public ResponseDto addTransaction(@RequestBody PlayerAddDto playerAddDto) {
+    public ResponseDto add(@RequestBody PlayerAddDto playerAddDto) {
         log.info("Request to add player details {}", playerAddDto);
-        return playerService.addTransaction(playerAddDto);
+        return playerService.add(playerAddDto);
     }
 
 

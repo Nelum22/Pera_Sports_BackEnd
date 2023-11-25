@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface PlayerTeamMappedRepository extends JpaRepository<PlayerTeamMappedEntity, Long> {
 
-    @Query("SELECT new com.example.pera_sport_app.player.dto.PlayerGetDtoAccordingToTeam(p.player.playerId,p.player.firstName,p.player.lastName,p.player.faculty,p.player.regNo,p.player.birthDay,'-') " +
+    @Query("SELECT new com.example.pera_sport_app.player.dto.PlayerGetDtoAccordingToTeam(p.player.playerId,p.player.firstName,p.player.lastName,p.player.faculty,p.player.regNo,p.player.birthDay,'-',p.player.status) " +
             "FROM PlayerTeamMappedEntity p WHERE p.tId.teamName IN :teamName")
     List<PlayerGetDtoAccordingToTeam> findPlayersAccordingToTeam(String teamName);
 

@@ -49,7 +49,7 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public ResponseDto addTeam(TeamAddRequestDto teamAddRequestDto){
         try{
-            if(!(teamRepository.existsByTeamName(teamAddRequestDto.getTeamName()))) {
+            if(!(teamRepository.existsByTeamNameAndTeamYear(teamAddRequestDto.getTeamName(),teamAddRequestDto.getTeamYear()))) {
                 Team team = mapper.map(teamAddRequestDto, Team.class);
                 team.setCreatedDate(LocalDateTime.now());
                 team.setTeamStatus(Status.ACTIVE);

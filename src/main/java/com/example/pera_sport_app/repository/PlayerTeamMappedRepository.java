@@ -13,7 +13,7 @@ public interface PlayerTeamMappedRepository extends JpaRepository<PlayerTeamMapp
 
     @Query("SELECT new com.example.pera_sport_app.player.dto.PlayerGetDtoAccordingToTeam(p.player.playerId,p.player.firstName,p.player.lastName,p.player.faculty,p.player.regNo,p.player.birthDay,'-',p.player.status) " +
             "FROM PlayerTeamMappedEntity p WHERE p.tId.teamName IN :teamName AND p.player.status IN :status")
-    List<PlayerGetDtoAccordingToTeam> findPlayersAccordingToTeam(String teamName, Status status);
+    List<PlayerGetDtoAccordingToTeam> findPlayersAccordingToTeam(String teamName, Status status,String teamYear);
 
 
 }

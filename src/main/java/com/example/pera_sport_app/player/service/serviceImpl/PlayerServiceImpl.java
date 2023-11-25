@@ -260,7 +260,7 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public List<PlayerGetDtoAccordingToTeam> getPlayersAccordingToTeam(String teamName) {
         try {
-            List<PlayerGetDtoAccordingToTeam> playerGetDtoAccordingToTeam = playerTeamMappedRepository.findPlayersAccordingToTeam(teamName,ACTIVE);
+            List<PlayerGetDtoAccordingToTeam> playerGetDtoAccordingToTeam = playerTeamMappedRepository.findPlayersAccordingToTeam(teamName,ACTIVE,"2023");
             for (PlayerGetDtoAccordingToTeam player : playerGetDtoAccordingToTeam) {
                 PlayerRoleMappedEntity playerRoleMappedEntity = playerRoleMappedRepository.findByPlayerIdPlayerId(player.getPlayerId());
                 PlayerRole playerRole = playerRoleRepository.findByPlayerRoleId(playerRoleMappedEntity.getPlayerRoleId().getPlayerRoleId());

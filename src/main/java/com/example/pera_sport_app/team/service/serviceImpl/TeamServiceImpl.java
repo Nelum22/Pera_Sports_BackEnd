@@ -62,8 +62,8 @@ public class TeamServiceImpl implements TeamService {
                 TeamGetDto teamGetDto = mapper.map(team,TeamGetDto.class);
                 Player captain = playerRepository.findCaptainAndVCaptainByRoleAndName(team.getTeamName(),1L);
                 Player vCaptain = playerRepository.findCaptainAndVCaptainByRoleAndName(team.getTeamName(),2L);
-                teamGetDto.setCaptain(captain.getFirstName()+" "+captain.getLastName());
-                teamGetDto.setVCaptain(vCaptain.getFirstName()+" "+vCaptain.getLastName());
+                teamGetDto.setCaptain(captain == null? " " :captain.getFirstName()+" "+captain.getLastName());
+                teamGetDto.setVCaptain(captain == null? " " :vCaptain.getFirstName()+" "+vCaptain.getLastName());
                 teamGetDtos.add(teamGetDto);
             }
 

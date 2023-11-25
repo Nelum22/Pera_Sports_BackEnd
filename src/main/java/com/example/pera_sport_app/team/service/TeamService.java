@@ -14,7 +14,7 @@ public interface TeamService {
 
     ResponseDto addTeam(TeamAddRequestDto teamAddRequestDto);
 
-    List<TeamGetDto> getTeam(String teamName);
+    List<TeamGetDto> getTeam(String teamName,String teamYear);
 
     ResponseDto updateTeam(TeamUpdateRequestDto teamUpdateRequestDto);
 

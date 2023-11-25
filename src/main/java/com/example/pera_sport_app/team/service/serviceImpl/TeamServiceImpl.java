@@ -71,8 +71,8 @@ public class TeamServiceImpl implements TeamService {
                     String[] detailsDescription2 = {};
                     String[] detailsDescription3 = {};
                     String[] detailsDescription4 = {};
-                    mailData.setHeader("New Team Added To The System");
-                    mailData.setHeaderDescription("");
+                    mailData.setHeader("Pera Sport Information Website");
+                    mailData.setHeaderDescription("New Player Added Successfully To "+savedTeam.getTeamName()+" Team");
                     mailData.setDescription("");
                     mailData.setDetails(details);
                     mailData.setDetailsDescription1(detailsDescription1);
@@ -93,13 +93,13 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public List<TeamGetDto> getTeam(String teamName){
+    public List<TeamGetDto> getTeam(String teamName,String teamYear){
         try{
             List<Team> teams = new ArrayList<>();
             if(!(teamName.isEmpty())){
-                teams = teamRepository.findTeamsByName(teamName);
+                teams = teamRepository.findTeamsByName(teamName,teamYear);
             }else {
-                teams = teamRepository.findTeams();
+                teams = teamRepository.findTeams(teamYear);
             }
             List<TeamGetDto> teamGetDtos = new ArrayList<>();
             for(Team team : teams){
@@ -138,8 +138,37 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public ResponseDto deleteTeam(Long teamId){
         try{
-            Team team = teamRepository.findByTeamId(teamId);
+            Team savedTeam = teamRepository.findByTeamId(teamId);
             teamRepository.deleteById(teamId);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+            List<MasterData> masterData = masterDateRepository.findAllDataByType("ADMIN");
+
+            for(MasterData masterData1 : masterData) {
+
+                // Send Email
+                MailRequest mailRequest = new MailRequest();
+                mailRequest.setTo(masterData1.getEmail());
+                mailRequest.setSubject(savedTeam.getTeamName()+" Team Deleted From Pera Sport Information Website");
+                MailData mailData = new MailData();
+                String[] details = {"Team Details :"};
+                String[] detailsDescription1 = {"Team Name - " + savedTeam.getTeamName(), "Team Count - " + savedTeam.getTeamCount(), "Year - " + savedTeam.getTeamYear(),
+                        "Status - " + savedTeam.getTeamStatus(), "Created Date - " + formatter.format(savedTeam.getCreatedDate())};
+                String[] detailsDescription2 = {};
+                String[] detailsDescription3 = {};
+                String[] detailsDescription4 = {};
+                mailData.setHeader("Pera Sport Information Website");
+                mailData.setHeaderDescription(savedTeam.getTeamName()+" Team Deleted From Pera Sport Information Website");
+                mailData.setDescription("");
+                mailData.setDetails(details);
+                mailData.setDetailsDescription1(detailsDescription1);
+                mailData.setDetailsDescription2(detailsDescription2);
+                mailData.setDetailsDescription3(detailsDescription3);
+                mailData.setDetailsDescription4(detailsDescription4);
+
+                emailService.sendEmailWithHtmlContent(mailRequest, mailData);
+            }
+
             return new ResponseDto("01","Team Deleted");
         }catch (Exception e){
             e.printStackTrace();

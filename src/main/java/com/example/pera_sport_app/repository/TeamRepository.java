@@ -11,11 +11,11 @@ public interface TeamRepository extends JpaRepository<Team, Long> {
 
 
 
-    @Query("SELECT s FROM Team s WHERE s.teamName LIKE %:name% ")
-    List<Team> findTeamsByName(String name);
+    @Query("SELECT s FROM Team s WHERE s.teamName LIKE %:name% AND s.teamYear IN :teamYear")
+    List<Team> findTeamsByName(String name, String teamYear);
 
-    @Query("SELECT s FROM Team s  ")
-    List<Team> findTeams();
+    @Query("SELECT s FROM Team s WHERE s.teamYear IN :teamYear ")
+    List<Team> findTeams(String teamYear);
 
 
     Team findByTeamId(Long teamId);

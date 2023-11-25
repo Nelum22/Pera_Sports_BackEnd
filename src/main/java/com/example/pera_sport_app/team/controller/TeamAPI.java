@@ -27,9 +27,10 @@ public class TeamAPI {
     }
 
     @PostMapping(value = "/get-teams")
-    public List<TeamGetDto> getTeam(@RequestParam ("teamName") String teamName) {
-        log.info("Request to get team {}", teamName);
-        return teamService.getTeam(teamName);
+    public List<TeamGetDto> getTeam(@RequestParam ("teamName") String teamName,
+                                    @RequestParam ("teamYear") String teamYear) {
+        log.info("Request to get team {}{}", teamName,teamYear);
+        return teamService.getTeam(teamName,teamYear);
     }
 
     @PostMapping(value = "/update")
